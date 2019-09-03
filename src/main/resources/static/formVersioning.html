@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<body>
+
+<h2>HTML Forms</h2>
+
+
+<h2>Form 1</h2>
+<form id="myform">
+  First name:<br>
+  <input type="text" name="firstname" value="Mickey">
+  <br>
+  Last name:<br>
+  <input type="text" name="lastname" value="Mouse">
+  <br><br>
+    <button type="button" onclick="clickAct()">Submitt!!!</button> <!--formencype="application/x-www-form-urlencoded" -->
+</form>
+
+<h2>Form 2</h2>
+<form id="form2" >
+  First name:<br>
+  <input type="text" name="name" value="Charlie Chaplin ">
+  <br><br>
+    <button type="button" onclick="clickForm2()">Submit Just Name</button> <!--formencype="application/x-www-form-urlencoded" -->
+</form>
+</body>
+
+<script>
+    function clickAct()
+    {
+        // var userForm = document.getElementById("myform");
+        var formdata = new FormData();
+        formdata.append('firstname', 'xyz');
+        formdata.append('lastname', 'abc');
+        // var formdata = 'firstname=sarang&lastname=pat';
+        var url = 'http://localhost:8091/app/addUser';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Accept", "application/vnd.tomtom.flow-v3+json");
+        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function () {
+            console.log("Before parsing: " + xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            console.log("After : " + response);
+        }
+        xhr.onerror  = function () {
+            alert("Error!. ");
+
+        };
+        xhr.ontimeout = function () {
+            alert("Sorry request timeout. ");
+
+        };
+        xhr.send(formdata);
+    }
+    function clickForm2()
+    {
+        // var userForm = document.getElementById("myform");
+        var formdata = new FormData();
+        formdata.append('firstname', 'Sarang Patrudkar');
+        // var formdata = 'firstname=sarang&lastname=pat';
+        var url = 'http://localhost:8091/app/addUser';
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Accept", "application/vnd.tomtom.flow-v4+json");
+        // xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        xhr.onload = function () {
+            console.log("Before parsing: " + xhr.responseText);
+            var response = JSON.parse(xhr.responseText);
+            console.log("After : " + response);
+        }
+        xhr.onerror  = function () {
+            alert("Error!. ");
+
+        };
+        xhr.ontimeout = function () {
+            alert("Sorry request timeout. ");
+
+        };
+        xhr.send(formdata);
+    }
+</script>
+
+
+</html>
